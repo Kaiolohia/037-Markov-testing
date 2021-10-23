@@ -11,7 +11,9 @@ class MarkovMachine {
   constructor(text) {
     let words = text.split(/[ \r\n]+/);
     this.words = words.filter(c => c !== "");
+    console.log(this.words)
     this.chain = this.makeChains(this.words);
+    
   }
 
   /** set markov chains:
@@ -34,10 +36,9 @@ class MarkovMachine {
 
   /** return random text from chains */
 
-  makeText(startingWord, numWords = 100) {
+  makeText(startingWord = this.words[0], numWords = 100) {
     let i = 0
     let phrase = []
-    let keys = Object.keys(this.chain);
     let currentKey = startingWord
     phrase.push(startingWord)
     while(true) {
@@ -55,10 +56,10 @@ class MarkovMachine {
       currentKey = word
       i++
     }
-    return phrase
+    return phrase.join(' ')
   }
 }
 
-let markovMachine = new MarkovMachine("the cat in the hat is in the hat")
-console.log(markovMachine.chain)
-markovMachine.makeText("in",6)
+module.exports = {
+  MarkovMachine
+};
